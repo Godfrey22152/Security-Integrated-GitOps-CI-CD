@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+// import for a custom metric for Prometheus
+import io.micrometer.core.annotation.Timed;
 
 import java.math.BigDecimal;
 
@@ -18,6 +20,7 @@ public class BankController {
     @Autowired
     private AccountService accountService;
 
+    @Timed(value = "bankapp.dashboard", description = "Time taken to display the dashboard")
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -31,6 +34,7 @@ public class BankController {
         return "register";
     }
 
+    @Timed(value = "bankapp.registerAccount", description = "Time taken to register a new account")
     @PostMapping("/register")
     public String registerAccount(@RequestParam String username, @RequestParam String password, Model model) {
         try {
@@ -47,6 +51,7 @@ public class BankController {
         return "login";
     }
 
+    @Timed(value = "bankapp.deposit", description = "Time taken to process a deposit")
     @PostMapping("/deposit")
     public String deposit(@RequestParam BigDecimal amount) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -55,6 +60,7 @@ public class BankController {
         return "redirect:/dashboard";
     }
 
+    @Timed(value = "bankapp.withdraw", description = "Time taken to process a withdrawal")
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam BigDecimal amount, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -71,6 +77,7 @@ public class BankController {
         return "redirect:/dashboard";
     }
 
+    @Timed(value = "bankapp.transactionHistory", description = "Time taken to fetch transaction history")
     @GetMapping("/transactions")
     public String transactionHistory(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -79,6 +86,7 @@ public class BankController {
         return "transactions";
     }
 
+    @Timed(value = "bankapp.transferAmount", description = "Time taken to transfer an amount")
     @PostMapping("/transfer")
     public String transferAmount(@RequestParam String toUsername, @RequestParam BigDecimal amount, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
