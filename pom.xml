@@ -99,7 +99,17 @@
                 </dependency>
 
 		<dependency>
-		    <!-- jacoco code-coverage dependency --> 
+		<!--  Micrometer and Prometheus dependencies -->
+    		    <groupId>io.micrometer</groupId>
+    		    <artifactId>micrometer-core</artifactId>
+		</dependency>
+		<dependency>
+    		    <groupId>io.micrometer</groupId>
+    		    <artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>	
+
+		<dependency>
+	    <!-- jacoco code-coverage dependency --> 
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>0.8.8</version>
