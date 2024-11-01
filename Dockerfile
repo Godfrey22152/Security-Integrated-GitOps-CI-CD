@@ -11,9 +11,11 @@ COPY src ./src
 COPY .mvn/ .mvn
 COPY mvnw .
 
+# Grant executable permissions to mvnw
+RUN chmod +x mvnw
+
 # Package the Spring Boot app
 RUN ./mvnw clean package -DskipTests
-
 
 # Use the official OpenJDK image to run the app
 FROM eclipse-temurin:17-jre-jammy 
